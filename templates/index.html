@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Semantic Textual Similarity</title>
+</head>
+<body>
+    <h1>Semantic Textual Similarity</h1>
+    <form id="similarityForm">
+        <label for="text1">Enter Text 1:</label><br>
+        <textarea id="text1" name="text1" rows="4" cols="50"></textarea><br>
+        <label for="text2">Enter Text 2:</label><br>
+        <textarea id="text2" name="text2" rows="4" cols="50"></textarea><br>
+        <button type="submit">Compute Similarity</button>
+    </form>
+    <div id="result"></div>
+
+    <script>
+        document.getElementById("similarityForm").addEventListener("submit", function(event) {
+            event.preventDefault();
+            var formData = new FormData(this);
+            fetch('/compute_similarity', {
+                method: 'POST',
+                body: formData
+            })
+            .then(response => response.json())
+            .then(data => {
+                document.getElementById("result").innerText = "Similarity Score: " + data.similarity_score;
+            });
+        });
+    </script>
+</body>
+</html>
