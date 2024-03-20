@@ -4,6 +4,18 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Semantic Textual Similarity</title>
+    <style>
+        /* CSS for the loading spinner */
+        .loading {
+            display: none;
+            text-align: center;
+            margin-top: 20px;
+        }
+        .loading img {
+            width: 50px;
+            height: 50px;
+        }
+    </style>
 </head>
 <body>
     <h1>Semantic Textual Similarity</h1>
@@ -14,18 +26,24 @@
         <textarea id="text2" name="text2" rows="4" cols="50"></textarea><br>
         <button type="submit">Compute Similarity</button>
     </form>
+    <div class="loading" id="loading">
+        <img src="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/0.16.1/images/loader-large.gif" alt="Loading...">
+    </div>
     <div id="result"></div>
 
     <script>
         document.getElementById("similarityForm").addEventListener("submit", function(event) {
             event.preventDefault();
             var formData = new FormData(this);
+            var loading = document.getElementById("loading");
+            loading.style.display = "block"; // Show loading spinner
             fetch('/compute_similarity', {
                 method: 'POST',
                 body: formData
             })
             .then(response => response.json())
             .then(data => {
+                loading.style.display = "none"; // Hide loading spinner
                 document.getElementById("result").innerText = "Similarity Score: " + data.similarity_score;
             });
         });
