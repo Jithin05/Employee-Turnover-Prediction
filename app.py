@@ -6,7 +6,7 @@ from sklearn.metrics.pairwise import cosine_similarity
 app = Flask(__name__)
 
 # Load Universal Sentence Encoder
-embed = hub.load("universal_sentence_encoder")
+embed = hub.load("https://tfhub.dev/google/universal-sentence-encoder-large/5")
 
 # Function to compute similarity score
 def compute_similarity(text1, text2):
